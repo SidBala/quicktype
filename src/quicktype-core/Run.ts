@@ -439,7 +439,9 @@ class Run implements RunContext {
             }
         }
 
-        const enumInference = allInputs.needSchemaProcessing ? "all" : this._options.inferEnums ? "infer" : "none";
+
+        const enumInference = "all"; //allInputs.needSchemaProcessing ? "all" : this._options.inferEnums ? "infer" : "none";
+        console.log("ENUM INFERENCE", enumInference, this._options.inferEnums , allInputs.needSchemaProcessing);
         this.time("expand strings", () => (graph = expandStrings(this, graph, enumInference)));
         this.time(
             "flatten unions",

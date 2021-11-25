@@ -7,10 +7,12 @@ import { TypeGraph, TypeRef } from "../TypeGraph";
 import { unifyTypes, unionBuilderForUnification } from "../UnifyClasses";
 import { RunContext } from "../Run";
 
-const REQUIRED_OVERLAP = 3 / 4;
+const REQUIRED_OVERLAP = 0.1;
 
 type Clique = {
     members: ClassType[];
+    
+
     prototypes: ClassType[];
 };
 
@@ -94,6 +96,7 @@ function tryAddToClique(c: ClassType, clique: Clique, onlyWithSameProperties: bo
         }
     }
     return false;
+    
 }
 
 function findSimilarityCliques(
@@ -130,6 +133,7 @@ function findSimilarityCliques(
 
     return cliques.map(clique => clique.members).filter(cl => cl.length > 1);
 }
+
 
 export function combineClasses(
     ctx: RunContext,

@@ -18,10 +18,10 @@ import { emptyTypeAttributes } from "../attributes/TypeAttributes";
 import { StringTypes } from "../attributes/StringTypes";
 import { RunContext } from "../Run";
 
-const MIN_LENGTH_FOR_ENUM = 10;
+const MIN_LENGTH_FOR_ENUM = 1;
 
-const MIN_LENGTH_FOR_OVERLAP = 5;
-const REQUIRED_OVERLAP = 3 / 4;
+const MIN_LENGTH_FOR_OVERLAP = 1;
+const REQUIRED_OVERLAP = 0.1;
 
 export type EnumInference = "none" | "all" | "infer";
 
@@ -102,14 +102,14 @@ export function expandStrings(ctx: RunContext, graph: TypeGraph, inference: Enum
 
                 const index = findOverlap(cases, false);
                 if (index >= 0) {
-                    // console.log(
-                    //     `unifying ${JSON.stringify(Array.from(cases))} with ${JSON.stringify(
-                    //         Array.from(enumSets[index])
-                    //     )}`
-                    // );
+                    console.log(
+                        `unifying ${JSON.stringify(Array.from(cases))} with ${JSON.stringify(
+                            Array.from(enumSets[index])
+                        )}`
+                    );
                     enumSets[index] = setUnion(enumSets[index], cases);
                 } else {
-                    // console.log(`adding new ${JSON.stringify(Array.from(cases))}`);
+                    console.log(`adding new ${JSON.stringify(Array.from(cases))}`);
                     enumSets.push(cases);
                 }
             }
@@ -128,11 +128,11 @@ export function expandStrings(ctx: RunContext, graph: TypeGraph, inference: Enum
 
             const index = findOverlap(enumInfo.cases, true);
             if (index >= 0) {
-                // console.log(
-                //     `late unifying ${JSON.stringify(Array.from(enumInfo.cases))} with ${JSON.stringify(
-                //         Array.from(enumSets[index])
-                //     )}`
-                // );
+                console.log(
+                    `late unifying ${JSON.stringify(Array.from(enumInfo.cases))} with ${JSON.stringify(
+                        Array.from(enumSets[index])
+                    )}`
+                );
                 enumSets[index] = setUnion(enumSets[index], enumInfo.cases);
             }
         }
